@@ -4,30 +4,12 @@ import {cacheLife} from "next/cache";
 import { IEvent } from "@/database/event.model";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
 const Page = async () => {
     'use cache';
-    cacheLife('hours');
-    let events = [];
-    try {
-        const response = await fetch(`${BASE_URL}/api/events`);
-        if (!response.ok) {
-            throw new Error(`Failed to fetch events: ${response.status} ${response.statusText}`);
-        }
-        
-        const data = await response.json();
-        
-        // Validate response structure
-        if (data && Array.isArray(data.events)) {
-            events = data.events;
-        } else {
-            console.error('Invalid events data structure received:', data);
-            // Fallback to empty array
-        }
-    } catch (error) {
-        // Log detailed error for debugging
-        console.error('Error loading events:', error instanceof Error ? error.message : error);
-        // events remains empty array, gracefully degrading
-    }
+    cacheLife('hours')
+    const response = await fetch(`${BASE_URL}/api/events`);
+    const { events } = await response.json();
 
     return (
         <section>
@@ -41,7 +23,7 @@ const Page = async () => {
 
                 <ul className="events">
                     {events && events.length > 0 && events.map((event: IEvent) => (
-                        <li key={event._id?.toString()} className="list-none">
+                        <li key={event.title} className="list-none">
                             <EventCard {...event} />
                         </li>
                     ))}
