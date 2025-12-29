@@ -11,7 +11,6 @@ type RouteParams = {
 };
 
 /**
-/**
  * GET /api/events/[slug]
  * Fetches a single event by its slug
  */
