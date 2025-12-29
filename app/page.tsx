@@ -41,7 +41,7 @@ const Page = async () => {
 
                 <ul className="events">
                     {events && events.length > 0 && events.map((event: IEvent) => (
-                        <li key={event.title} className="list-none">
+                        <li key={event._id?.toString()} className="list-none">
                             <EventCard {...event} />
                         </li>
                     ))}

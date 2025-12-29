@@ -7,7 +7,11 @@ import {cacheLife} from "next/cache";
 import { getSimilarEventsBySlug } from '@/lib/actions/event.action';
 import { IEvent } from '@/database/event.model';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || '';
+
+if (!BASE_URL) {
+   console.warn('NEXT_PUBLIC_BASE_URL is not defined');
+}
 
 const EventDetailItem = ({ icon, alt, label }: { icon: string; alt: string; label: string; }) => (
     <div className="flex-row-gap-2 items-center">
